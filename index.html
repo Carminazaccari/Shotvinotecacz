@@ -1,11 +1,49 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>SHOT</title>
-    </head>
-    <body>
-        <h1>Este proyecto va a tratar de una vinoteca, donde van a poder realizar las compras atraves de esta web</h1>
-        <script src="index.js"></script>
-    </body>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tienda SHOT</title>
+    <link rel="stylesheet" href="style.css" />
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    .oculto { display: none; }
+    .producto { margin: 10px 0; }
+    button { margin: 5px 0; }
+  </style>
+</head>
+<body>
+  <h1>Bienvenido a SHOT 🍸</h1>
+
+  <div id="formEdad">
+    <label>¿Cuántos años tenés?</label>
+    <input type="number" id="edadInput" min="0" />
+    <button onclick="validarEdad()">Ingresar</button>
+  </div>
+
+  <div id="menuPrincipal" class="oculto">
+    <h2>Menú principal</h2>
+    <button onclick="mostrarCategoria('combos')">1 - Combos para tu previa</button>
+    <button onclick="mostrarCategoria('cerveza')">2 - Cerveza</button>
+    <button onclick="mostrarCategoria('vino')">3 - Vino</button>
+    <button onclick="mostrarCategoria('vodka')">4 - Vodka</button>
+    <button onclick="mostrarCategoria('aperitivos')">5 - Aperitivos</button>
+    <button onclick="verCarrito()">6 - Ver carrito</button>
+    <button onclick="salir()">7 - Salir</button>
+  </div>
+
+  <div id="categoriaSeleccionada" class="oculto">
+    <h3 id="tituloCategoria"></h3>
+    <div id="productos"></div>
+    <button onclick="volverMenu()">Volver al menú</button>
+  </div>
+
+  <div id="carritoDiv" class="oculto">
+    <h3>🛒 Tu carrito</h3>
+    <ul id="carritoLista"></ul>
+    <button onclick="volverMenu()">Volver al menú</button>
+  </div>
+
+  <script src="index.js"></script>
+</body>
+</html>
