@@ -1,105 +1,139 @@
-const combos = ["Smirnoff + 2 speed", "Vino Balbo + Pritty 3lts", "Fernet Branca + 2 cocas 2lts", "Campari + citric de naranja"];
-const preciosCombos = [18000, 9000, 16000, 12000];
+let productosGlobal = {};
 
-const vino = ["Malbec", "Merlot", "Syrah", "Balbo"];
-const preciosVino = [5500, 6000, 7000, 4500];
-
-const cerveza = ["Quilmes", "Stella Artois", "Andes Roja", "Imperial"];
-const preciosCerveza = [3000, 5000, 4000, 3500];
-
-const vodka = ["Smirnoff", "Absolut", "Finlandia", "Belvedere"];
-const preciosVodka = [9000, 15000, 7000, 9000];
-
-const aperitivos = ["Campari", "Aperol", "Fernet Branca", "Gancia"];
-const preciosAperitivos = [8000, 7000, 14000, 6000];
+fetch('productos.json')
+  .then(res => res.json())
+  .then(data => {
+    productosGlobal = data;
+  })
+  .catch(err => console.error("Error al cargar los productos:", err));
 
 const carrito = [];
 
 function validarEdad() {
-    const edad = parseInt(document.getElementById("edadInput").value);
-    if (!isNaN(edad)) {
-        if (edad >= 18) {
-            document.getElementById("formEdad").classList.add("oculto");
-            document.getElementById("menuPrincipal").classList.remove("oculto");
-        } else {
-            alert("Lo siento, sos menor de edad y no podés ingresar.");
-        }
+  const edad = parseInt(document.getElementById("edadInput").value);
+  if (!isNaN(edad)) {
+    if (edad >= 18) {
+      document.getElementById("formEdad").classList.add("oculto");
+      document.getElementById("menuPrincipal").classList.remove("oculto");
     } else {
-        alert("Por favor ingresá una edad válida.");
+      Swal.fire({
+        icon: 'warning',
+        title: 'Acceso denegado',
+        text: 'Lo siento, sos menor de edad y no podés ingresar.'
+      });
     }
+  } else {
+    Swal.fire({
+      icon: 'error',
+      title: 'Edad no válida',
+      text: 'Por favor ingresá una edad válida.'
+    });
+  }
 }
 
 function mostrarCategoria(categoria) {
-    const contenedor = document.getElementById("productos");
-    contenedor.innerHTML = "";
-    let productos = [], precios = [];
+  const contenedor = document.getElementById("productos");
+  contenedor.innerHTML = "";
 
-    switch (categoria) {
-        case "combos":
-            productos = combos;
-            precios = preciosCombos;
-            break;
-        case "vino":
-            productos = vino;
-            precios = preciosVino;
-            break;
-        case "cerveza":
-            productos = cerveza;
-            precios = preciosCerveza;
-            break;
-        case "vodka":
-            productos = vodka;
-            precios = preciosVodka;
-            break;
-        case "aperitivos":
-            productos = aperitivos;
-            precios = preciosAperitivos;
-            break;
-    }
+  const productos = productosGlobal[categoria];
 
-    document.getElementById("tituloCategoria").innerText = `Elige un producto de ${categoria}`;
-    productos.forEach((producto, i) => {
-        const div = document.createElement("div");
-        div.classList.add("producto");
-        div.innerHTML = `${i + 1}. ${producto} - $${precios[i]} <button onclick="agregarAlCarrito('${producto}', ${precios[i]})">Agregar</button>`;
-        contenedor.appendChild(div);
-    });
+  if (!productos || productos.length === 0) {
+    contenedor.innerHTML = "<p>No hay productos disponibles en esta categoría.</p>";
+    return;
+  }
 
-    document.getElementById("menuPrincipal").classList.add("oculto");
-    document.getElementById("categoriaSeleccionada").classList.remove("oculto");
+  document.getElementById("tituloCategoria").innerText = `Elige un producto de ${categoria}`;
+
+  productos.forEach((producto, i) => {
+    const div = document.createElement("div");
+    div.classList.add("producto");
+    div.innerHTML = `
+      ${i + 1}. ${producto.nombre} - $${producto.precio}
+      <button onclick="agregarAlCarrito('${producto.nombre}', ${producto.precio})">Agregar</button>
+    `;
+    contenedor.appendChild(div);
+  });
+
+  document.getElementById("menuPrincipal").classList.add("oculto");
+  document.getElementById("categoriaSeleccionada").classList.remove("oculto");
 }
 
 function agregarAlCarrito(producto, precio) {
-    carrito.push({ producto, precio });
-    alert(`✅ Agregado al carrito: ${producto} - Precio: $${precio}`);
-}
-
-function volverMenu() {
-    document.getElementById("categoriaSeleccionada").classList.add("oculto");
-    document.getElementById("carritoDiv").classList.add("oculto");
-    document.getElementById("menuPrincipal").classList.remove("oculto");
+  carrito.push({ producto, precio });
+  Swal.fire({
+    icon: 'success',
+    title: 'Producto agregado',
+    text: `${producto} - Precio: $${precio}`
+  });
 }
 
 function verCarrito() {
-    const lista = document.getElementById("carritoLista");
-    lista.innerHTML = "";
+  const lista = document.getElementById("carritoLista");
+  lista.innerHTML = "";
 
-    if (carrito.length === 0) {
-        lista.innerHTML = "<li>Tu carrito está vacío.</li>";
-    } else {
-        carrito.forEach(item => {
-            const li = document.createElement("li");
-            li.textContent = `${item.producto} - $${item.precio}`;
-            lista.appendChild(li);
-        });
-    }
+  if (carrito.length === 0) {
+    lista.innerHTML = "<li>Tu carrito está vacío.</li>";
+  } else {
+    carrito.forEach(item => {
+      const li = document.createElement("li");
+      li.textContent = `${item.producto} - $${item.precio}`;
+      lista.appendChild(li);
+    });
+  }
 
-    document.getElementById("menuPrincipal").classList.add("oculto");
-    document.getElementById("carritoDiv").classList.remove("oculto");
+  document.getElementById("menuPrincipal").classList.add("oculto");
+  document.getElementById("carritoDiv").classList.remove("oculto");
+}
+
+function volverMenu() {
+  document.getElementById("categoriaSeleccionada").classList.add("oculto");
+  document.getElementById("carritoDiv").classList.add("oculto");
+  document.getElementById("menuPrincipal").classList.remove("oculto");
 }
 
 function salir() {
-    alert("¡Gracias por tu compra!");
+  Swal.fire({
+    icon: 'success',
+    title: '¡Gracias por tu compra!',
+    showConfirmButton: false,
+    timer: 2000
+  }).then(() => {
     location.reload();
+  });
 }
 
+function confirmarCompra() {
+  if (carrito.length === 0) {
+    Swal.fire({
+      icon: 'info',
+      title: 'Carrito vacío',
+      text: 'Agregá productos antes de finalizar la compra.'
+    });
+    return;
+  }
+
+  const total = carrito.reduce((acc, item) => acc + item.precio, 0);
+  const resumen = carrito.map(item => `• ${item.producto} - $${item.precio}`).join('<br>');
+
+  Swal.fire({
+    title: '¿Confirmar compra?',
+    html: `${resumen}<br><br><b>Total: $${total}</b>`,
+    icon: 'question',
+    showCancelButton: true,
+    confirmButtonText: 'Sí, comprar',
+    cancelButtonText: 'Cancelar'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      Swal.fire({
+        icon: 'success',
+        title: '¡Compra realizada!',
+        text: 'Gracias por tu compra.',
+        showConfirmButton: false,
+        timer: 2500
+      }).then(() => {
+        carrito.length = 0;
+        location.reload();
+      });
+    }
+  });
+}

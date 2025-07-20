@@ -1,0 +1,32 @@
+{
+  "combos": [
+    { "nombre": "Smirnoff + 2 speed", "precio": 18000 },
+    { "nombre": "Vino Balbo + Pritty 3lts", "precio": 9000 },
+    { "nombre": "Fernet Branca + 2 cocas 2lts", "precio": 16000 },
+    { "nombre": "Campari + citric de naranja", "precio": 12000 }
+  ],
+  "vino": [
+    { "nombre": "Malbec", "precio": 5500 },
+    { "nombre": "Merlot", "precio": 6000 },
+    { "nombre": "Syrah", "precio": 7000 },
+    { "nombre": "Balbo", "precio": 4500 }
+  ],
+  "cerveza": [
+    { "nombre": "Quilmes", "precio": 3000 },
+    { "nombre": "Stella Artois", "precio": 5000 },
+    { "nombre": "Andes Roja", "precio": 4000 },
+    { "nombre": "Imperial", "precio": 3500 }
+  ],
+  "vodka": [
+    { "nombre": "Smirnoff", "precio": 9000 },
+    { "nombre": "Absolut", "precio": 15000 },
+    { "nombre": "Finlandia", "precio": 7000 },
+    { "nombre": "Belvedere", "precio": 9000 }
+  ],
+  "aperitivos": [
+    { "nombre": "Campari", "precio": 8000 },
+    { "nombre": "Aperol", "precio": 7000 },
+    { "nombre": "Fernet Branca", "precio": 14000 },
+    { "nombre": "Gancia", "precio": 6000 }
+  ]
+}
