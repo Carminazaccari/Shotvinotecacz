@@ -18,31 +18,31 @@
   <div id="formEdad">
     <label>¿Cuántos años tenés?</label>
     <input type="number" id="edadInput" min="0" />
-    <button onclick="validarEdad()">Ingresar</button>
+    <button id="btnValidarEdad">Ingresar</button>
   </div>
 
   <div id="menuPrincipal" class="oculto">
     <h2>Menú principal</h2>
-    <button onclick="mostrarCategoria('combos')">1 - Combos para tu previa</button>
-    <button onclick="mostrarCategoria('cerveza')">2 - Cerveza</button>
-    <button onclick="mostrarCategoria('vino')">3 - Vino</button>
-    <button onclick="mostrarCategoria('vodka')">4 - Vodka</button>
-    <button onclick="mostrarCategoria('aperitivos')">5 - Aperitivos</button>
-    <button onclick="verCarrito()">6 - Ver carrito</button>
-    <button onclick="salir()">7 - Salir</button>
+    <button id="btnCombo">1 - Combos para tu previa</button>
+    <button id="btnCerveza">2 - Cerveza</button>
+    <button id="btnVino">3 - Vino</button>
+    <button id="btnVodka">4 - Vodka</button>
+    <button id="btnAperitivos">5 - Aperitivos</button>
+    <button id="btnVerCarrito">6 - Ver carrito</button>
+    <button id="btnSalir">7 - Salir</button>
   </div>
 
   <div id="categoriaSeleccionada" class="oculto">
     <h3 id="tituloCategoria"></h3>
     <div id="productos"></div>
-    <button onclick="volverMenu()">Volver al menú</button>
+    <button id="btnVolverDesdeCategoria">Volver al menú</button>
   </div>
 
   <div id="carritoDiv" class="oculto">
     <h3>🛒 Tu carrito</h3>
   <ul id="carritoLista"></ul>
-  <button onclick="confirmarCompra()">Finalizar compra</button>  
-  <button onclick="volverMenu()">Volver al menú</button>
+  <button id="btnConfirmarCompra">Finalizar compra</button>  
+  <button id="btnVolverDesdeCarrito">Volver al menú</button>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="index.js"></script>
